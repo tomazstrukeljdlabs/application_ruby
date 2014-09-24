@@ -112,7 +112,8 @@ action :before_migrate do
       user new_resource.owner
       environment new_resource.environment
     end
-    execute "(ln -s ../../../shared/.env .env && rake gems:install); rm .env ; rm config/database.yml" do
+#    execute "(ln -s ../../../shared/.env .env && rake gems:install); rm .env ; rm config/database.yml" do
+    execute "(ln -s ../../../shared/.env .env && rake gems:install)" do
       cwd new_resource.release_path
       user new_resource.owner
       environment new_resource.environment
