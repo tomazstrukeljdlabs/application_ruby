@@ -107,7 +107,12 @@ action :before_migrate do
     #
     # maybe worth doing run_symlinks_before_migrate before before_migrate callbacks,
     # or an add'l callback.
-    execute "(ln -s ../../../shared/database.yml config/database.yml && rake gems:install); rm config/database.yml" do
+    execute "(ln -s ../../../shared/database.yml config/database.yml) " do
+      cwd new_resource.release_path
+      user new_resource.owner
+      environment new_resource.environment
+    end
+    execute "(ln -s ../../../shared/.env .env && rake gems:install); rm .env ; rm config/database.yml" do
       cwd new_resource.release_path
       user new_resource.owner
       environment new_resource.environment
