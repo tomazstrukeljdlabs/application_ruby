@@ -155,7 +155,7 @@ action :before_symlink do
   if new_resource.precompile_assets
 #    command = "rake assets:precompile"
     command = "rake assets:precompile"
-    command = "/bin/bash -c 'source /var/app/shared/.env ; env ; sleep 120 ; #{bundle_command} exec #{command}'" if new_resource.bundler
+    command = "/bin/bash -c 'source /var/app/shared/.env ; env ; sleep 20 ; #{bundle_command} exec #{command}'" if new_resource.bundler
     execute command do
       cwd new_resource.release_path
       user new_resource.owner
