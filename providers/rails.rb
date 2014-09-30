@@ -108,7 +108,7 @@ action :before_migrate do
     # maybe worth doing run_symlinks_before_migrate before before_migrate callbacks,
     # or an add'l callback.
     # execute "(ln -s ../../../shared/database.yml config/database.yml && rake gems:install ) ; rm config/database.yml" do
-    execute "(ln -s ../../shared/database.yml config/database.yml && rake gems:install ) ; rm config/database.yml" do
+    execute "(ln -s ../../../shared/database.yml config/database.yml ; sleep 60 ; rake gems:install ) ; rm config/database.yml" do
       cwd new_resource.release_path
       user new_resource.owner
       environment new_resource.environment
@@ -155,7 +155,8 @@ action :before_symlink do
   if new_resource.precompile_assets
 #    command = "rake assets:precompile"
     command = "rake assets:precompile"
-    command = "/bin/bash -c 'source /var/app/shared/.env ; env ; sleep 20 ; #{bundle_command} exec #{command}'" if new_resource.bundler
+    # command = "/bin/bash -c 'source /var/app/shared/.env ; env ; sleep 20 ; #{bundle_command} exec #{command}'" if new_resource.bundler
+    command = "/bin/bash -c 'source /var/app/shared/.env ; #{bundle_command} exec #{command}'" if new_resource.bundler
     execute command do
       cwd new_resource.release_path
       user new_resource.owner
