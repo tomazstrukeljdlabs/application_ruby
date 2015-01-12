@@ -148,6 +148,12 @@ action :before_symlink do
       environment new_resource.environment
     end
 
+    execute "(rm -Rf tmp ; ln -s ../../shared/tmp tmp)" do
+      cwd new_resource.release_path
+      user new_resource.owner
+      environment new_resource.environment
+    end
+
   if new_resource.precompile_assets.nil?
     new_resource.precompile_assets ::File.exists?(::File.join(new_resource.release_path, "config", "assets.yml"))
   end
