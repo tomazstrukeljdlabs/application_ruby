@@ -163,12 +163,13 @@ action :before_symlink do
       environment new_resource.environment
     end
   end
-
-    execute "(rm -Rf tmp ; ln -s ../../shared/tmp tmp)" do
-      cwd new_resource.release_path
-      user new_resource.owner
-      environment new_resource.environment
-    end
+    
+    ## works for one role , but not for others
+    # execute "(rm -Rf tmp ; ln -s ../../shared/tmp tmp)" do
+    #   cwd new_resource.release_path
+    #   user new_resource.owner
+    #   environment new_resource.environment
+    # end
 
 end
 
